@@ -133,7 +133,7 @@ app.post("/usuarios/:id/novoCartao", async (req, res) => {
 });
 
 
-//Rotas de conquistas
+// Criação das rotas de conquistas
 app.get("/usuarios/:id/conquistas", async (req, res) => {
   const id = parseInt(req.params.id);
   const jogo = await Jogo.findByPk(id, { raw: true });
