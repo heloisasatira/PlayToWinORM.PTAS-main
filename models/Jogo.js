@@ -4,8 +4,13 @@ const { DataTypes } = require("sequelize");
 const Jogo = db.define("Jogo", {
   titulo: {
     type: DataTypes.STRING,
+    allowNull: false,
   },
-  // Há outros campos a serem inseridos aqui...
+  preco: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  }
+
 });
 
 module.exports = Jogo;

@@ -6,6 +6,7 @@ const exphbs = require("express-handlebars");
 
 const Usuario = require("./models/Usuario");
 const Cartao = require("./models/Cartao");
+const Conquista = require("./models/Conquistas");
 const Jogo = require("./models/Jogo");
 
 Jogo.belongsToMany(Usuario, { through: "aquisicoes" });
@@ -129,6 +130,42 @@ app.post("/usuarios/:id/novoCartao", async (req, res) => {
   await Cartao.create(dadosCartao);
 
   res.redirect(`/usuarios/${id}/cartoes`);
+});
+
+
+//Rotas de conquistas
+app.get("/usuarios/:id/conquistas", async (req, res) => {
+  const id = parseInt(req.params.id);
+  const jogo = await Jogo.findByPk(id, { raw: true });
+
+  const conquistas = await Conquista.findAll({
+    raw: true,
+    where: { UsuarioId: id },
+  });
+
+  res.render("conquistas.handlebars", { jogo, conquistas });
+});
+
+//Formulário de cadastro das conquistas
+app.get("/usuarios/:id/novaConquista", async (req, res) => {
+  const id = parseInt(req.params.id);
+  const jogo = await Jogo.findByPk(id, { raw: true });
+
+  res.render("formConquista", { jogo });
+});
+
+//Cadastrar a conquista
+app.post("/usuarios/:id/novaConquista", async (req, res) => {
+  const id = parseInt(req.params.id);
+
+  const informacoes = {
+    quantidade: req.body.quantidade,
+    nome: req.body.nome,
+    UsuarioId: id,
+  };
+
+  await Conquista.create(informacoes);
+  res.redirect(`/jogod/${id}/conquistas`);
 });
 
 app.listen(8000, () => {
