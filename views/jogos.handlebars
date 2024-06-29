@@ -1,16 +1,17 @@
-<h1>Usuario {{usuario.nome}} - Conquistas adquiridas</h1>
-
-<a href="/jogos/{{jogo.id}}/novaConquista">Cadastrar conquistas</a>
+<h1>Usuario {{usuario.nome}} - Jogos</h1>
+<a href="/usuarios/{{usuario.id}}/novoJogo">Cadastrar novo jogo!</a>
 
 <table border="1">
   <tr>
     <th>Título</th>
     <th>Descrição</th>
+    <th>Preço</th>
   </tr>
-  {{#each conquistas}}
+  {{#each jogos}}
     <tr>
       <td>{{this.titulo}}</td>
       <td>{{this.descricao}}</td>
+      <td>{{this.preco}}</td>
     </tr>
   {{/each}}
 </table>

@@ -81,6 +81,7 @@ app.post("/usuarios/:id/update", async (req, res) => {
   }
 });
 
+//rota de exclusão de usuário
 app.post("/usuarios/:id/delete", async (req, res) => {
   const id = parseInt(req.params.id);
 
@@ -93,8 +94,44 @@ app.post("/usuarios/:id/delete", async (req, res) => {
   }
 });
 
-// Rotas para cartões
 
+//Rotas para Jogos:
+app.get("/usuarios/:id/jogos", async (req, res) => {
+  const id = parseInt(req.params.id);
+  const usuario = await Usuario.findByPk(id, { raw: true });
+
+  const jogos = await Jogo.findAll({
+    raw: true,
+    where: { UsuarioId: id },
+  });
+  res.render("jogos.handlebars", { usuario, jogos });
+});
+
+//Formulário de cadastro de jogos
+app.get("/usuarios/:id/novoJogo", async (req, res) => {
+  const id = parseInt(req.params.id);
+  const usuario = await Usuario.findByPk(id, { raw: true });
+
+  res.render("formJogo", { usuario });
+});
+
+//Cadastro dos jogos
+app.post("/usuarios/:id/novoJogo", async (req, res) => {
+  const id = parseInt(req.params.id);
+
+  const dadosJogos = {
+    titulo: req.body.titulo,
+    descricao: req.body.descricao,
+    preco: req.body.preco,
+    UsuarioId: id,
+  };
+
+  await Jogo.create(dadosJogos);
+  res.redirect(`/usuarios/${id}/jogos`);
+});
+
+
+// Rotas para cartões
 //Ver cartões do usuário
 app.get("/usuarios/:id/cartoes", async (req, res) => {
   const id = parseInt(req.params.id);
@@ -104,7 +141,6 @@ app.get("/usuarios/:id/cartoes", async (req, res) => {
     raw: true,
     where: { UsuarioId: id },
   });
-
   res.render("cartoes.handlebars", { usuario, cartoes });
 });
 
@@ -131,7 +167,6 @@ app.post("/usuarios/:id/novoCartao", async (req, res) => {
 
   res.redirect(`/usuarios/${id}/cartoes`);
 });
-
 
 // Criação das rotas de conquistas
 app.get("/usuarios/:id/conquistas", async (req, res) => {
@@ -165,7 +200,7 @@ app.post("/usuarios/:id/novaConquista", async (req, res) => {
   };
 
   await Conquista.create(informacoes);
-  res.redirect(`/jogod/${id}/conquistas`);
+  res.redirect(`/jogos/${id}/conquistas`);
 });
 
 app.listen(8000, () => {

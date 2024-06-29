@@ -5,12 +5,12 @@ const Jogo = require("../models/Jogo");
 const Conquista = db.define(
   "Conquista",
   {
-    quantidade: {
-      type: DataTypes.INTEGER(50),
+    titulo: {
+      type: DataTypes.STRING(30),
       allowNull: false,
     },
-    nome: {
-        type: DataTypes.STRING(20),
+    descricao: {
+        type: DataTypes.STRING(60),
         allowNull: false,
     }
   },

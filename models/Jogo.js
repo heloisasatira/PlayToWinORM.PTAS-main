@@ -6,8 +6,12 @@ const Jogo = db.define("Jogo", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  descricao: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   preco: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.DOUBLE,
     allowNull: false,
   }
 
