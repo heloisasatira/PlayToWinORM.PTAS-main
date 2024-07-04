@@ -19,7 +19,7 @@ const Conquista = db.define(
   }
 );
 
-Conquista.belongsTo(Jogo);
-Usuario.hasMany(Conquista);
+Conquista.belongsTo(Jogo, { foreignKey: 'idJogo' });
+Usuario.hasMany(Conquista, { foreignKey: 'idJogo' });
 
 module.exports = Conquista;
